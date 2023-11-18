@@ -6,6 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 @SpringBootApplication
@@ -38,5 +40,12 @@ public class VeiculosApplication {
     @Bean
     public ModelMapper obterModelMapper() {
         return new ModelMapper();
+    }
+
+
+    // Configurando passwordEncoder como um Bean, para poder injeta-lo/usa-lo na UsuarioService / SecurityConfiguration
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }

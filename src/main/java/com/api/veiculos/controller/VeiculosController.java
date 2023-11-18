@@ -7,6 +7,7 @@ import com.api.veiculos.dto.VeiculoResponse;
 import com.api.veiculos.model.Multa;
 import com.api.veiculos.model.Veiculo;
 import com.api.veiculos.service.VeiculoService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,7 @@ public class VeiculosController {
 
 
     @GetMapping
+    @RolesAllowed( {"ADMIN","USUARIO"} )
     public ResponseEntity<List<VeiculoResponse>> consultar() {
         var veiculos = veiculoService.consultar();
         var resp = new ArrayList<VeiculoResponse>();
@@ -45,6 +47,7 @@ public class VeiculosController {
     }
 
     @GetMapping("/{placa}")
+    @RolesAllowed( {"ADMIN","USUARIO"} )
     public ResponseEntity<VeiculoResponse> consultar(@PathVariable("placa") String placa) {
         Veiculo veiculo = veiculoService.consultar(placa);
         var resp = modelMapper.map(veiculo, VeiculoResponse.class);
@@ -57,6 +60,7 @@ public class VeiculosController {
     }
 
     @PostMapping
+    @RolesAllowed("ADMIN")
     public ResponseEntity<VeiculoResponse> cadastrarVeiculo(@RequestBody @Valid VeiculoRequest request) {
         var veiculo = modelMapper.map(request, Veiculo.class);
         veiculo = veiculoService.salvar(veiculo);
@@ -65,6 +69,7 @@ public class VeiculosController {
     }
 
     @PostMapping("/{placa}/multas")
+    @RolesAllowed("ADMIN")
     public ResponseEntity<MultaResponse> cadastrarMulta(@PathVariable("placa") String placa,
                                                         @RequestBody @Valid MultaRequest request) {
         var multa = modelMapper.map(request, Multa.class);

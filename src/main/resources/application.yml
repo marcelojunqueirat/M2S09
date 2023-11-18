@@ -19,4 +19,4 @@ spring:
         mode: always
 
 secret:
-  key:
+  key: ${JWT_SECRET:1234567890qwertyuiop}
