@@ -37,4 +37,9 @@ public class Veiculo {
         this.anoFabricacao = anoFabricacao;
         this.cor = cor;
     }
+
+
+    public boolean temMultas() {
+        return this.multas != null && !this.multas.isEmpty();
+    }
 }
